@@ -29,6 +29,20 @@ public class ProfessorController {
     }
 
 
+    @PutMapping("/{id}")
+    public Professor atualizarProfessores(@PathVariable Long id,@RequestBody Professor novoprofessor){
+
+        Professor verificaProfessor = professorService.buscarProfessorId(id);
+        if (verificaProfessor == null) return null;
+
+        verificaProfessor.setNome(novoprofessor.getNome());
+        verificaProfessor.setEmail(novoprofessor.getEmail());
+        verificaProfessor.setTelefone(novoprofessor.getTelefone());
+
+        return professorService.salvarNovoProfessor(verificaProfessor);
+    }
+
+
     @DeleteMapping("/{id}")
     public void excluirProfessor(@PathVariable Long id){
         professorService.deletarProfessor(id);

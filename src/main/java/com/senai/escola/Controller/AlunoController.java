@@ -1,6 +1,7 @@
 package com.senai.escola.Controller;
 
 import com.senai.escola.Models.Aluno;
+import com.senai.escola.Models.Professor;
 import com.senai.escola.Service.AlunoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,22 @@ public class AlunoController {
     public List<Aluno> buscarAlunos(){
         return alunoService.buscarTodosAlunos();
     }
+
+
+
+    @PutMapping("/{id}")
+    public Aluno atualizarAlunos(@PathVariable Long id, @RequestBody Aluno novoAluno){
+
+        Aluno verificaAluno = alunoService.buscarAlunoId(id);
+        if (verificaAluno == null) return null;
+
+        verificaAluno.setNome(novoAluno.getNome());
+        verificaAluno.setEmail(novoAluno.getEmail());
+        verificaAluno.setTelefone(novoAluno.getTelefone());
+
+        return alunoService.salvarNovoAluno(verificaAluno);
+    }
+
 
     @PostMapping
     public Aluno salvar(@RequestBody Aluno aluno){
